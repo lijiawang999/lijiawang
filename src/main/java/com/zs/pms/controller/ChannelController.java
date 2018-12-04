@@ -82,15 +82,15 @@ public String  add(TChannel channel){
 /**
  * 5.修改获取栏目
  */
-	@RequestMapping("channel/get.do")
-	public String get(ModelMap map, int id){
-		TChannel channel=cs.queryById(id);
-		map.addAttribute("CHANNEL", channel);
-		List<TChannel> channel2=cs.queryByPid(0);
-		map.addAttribute("LIST", channel2);		
-		return "channel/update";
-		
-	}
+//	@RequestMapping("channel/get.do")
+//	public String get(ModelMap map, int id){
+//		TChannel channel=cs.queryById(id);
+//		map.addAttribute("CHANNEL", channel);
+//		List<TChannel> channel2=cs.queryByPid(0);
+//		map.addAttribute("LIST", channel2);		
+//		return "channel/update";
+//		
+//	}
 	
 }
 
