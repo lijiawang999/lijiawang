@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指向dao层 -->
+<mapper namespace="com.zs.pms.dao.ChannelDao">
+     <select id="queryByPid" parameterType="int" resultType="TChannel">
+        select * from tchannel where pid=#{pid}
+     </select>
+    
+     <resultMap type="TChannel" id="channelmap">
+         <!-- 一对一关联
+     	 property:属性名
+     	 column:关联的字段名
+      	select;关联执行的sql名称 
+                        执行完sql返回的对象赋值给dep-->
+     	<association property="channel" column="pid" select="getchannel"/>  
+     	
+    </resultMap> 
+          
+    <!-- 关联执行 查询所属栏目-->   
+    <select id="getchannel" parameterType="int" resultType="TChannel">
+      select * from tchannel where id=#{pid}
+    </select>
+      <!-- 1.普通条件查询 -->
+    
+    <select id="queryByCon" parameterType="QueryChannel" resultType="TChannel">        
+        <!-- 调用sql片段 -->
+          <include refid="selector"/>
+          <include refid="where"/>
+          <include refid="order"/>               
+    </select>
+ 	
+  <!--2. 查分页 -->
+	<select id="queryByPage" parameterType="QueryChannel" resultMap="channelmap">
+		<!-- 调用sql片段  -->
+		select * from
+		  (select rownum n,t.* 
+		  from(
+		  <include refid="selector"/>
+		  <include refid="where"/>
+		  <include refid="order"/>
+		  
+		  )t)t1
+		  <include refid="page"/>
+	</select>
+	<!-- 3.查询总页数 -->
+ <select id="queryCount" parameterType="QueryChannel" resultType="int">
+   select count(1) from Tchannel 
+    <include refid="where"/>
+ </select>
+ <!-- 4.删除一条 -->
+ <delete id="deleteById" parameterType="int">
+   delete from tchannel where id=#{id}
+ </delete>
+ <!-- 5.新增 -->
+ <insert id="insert" parameterType="TChannel">
+    <selectKey keyProperty="id" order="BEFORE" resultType="int">
+      select seq_channel.nextval  from dual
+    </selectKey>
+    insert into tchannel(id,cname,pid,lev,isleaf,sort)
+    values(#{id},#{cname},#{pid},2,1,2)
+    
+    
+ </insert>
+	
+   <!--5. 修改 -->
+   <update id="update" parameterType="TChannel">
+      update tchannel
+      <set>
+            <!--去掉最后一个逗号 因为  -->
+         <trim suffixOverrides=",">
+           <if test="cname!=null and cname!=''">
+              cname=#{cname},
+           </if>
+           <if test="pid!=0">
+              pid=#{pid} ,         
+           </if> 
+          </trim>     
+      </set>
+    where id=#{id}
+   </update>	
+	<!-- 查一条 -->
+	 <select id="queryById" parameterType="int" resultType="TChannel">
+      select * from TChannel where id=#{id}
+    </select>
+	
+  <!-- SQL片段 -->
+		<!-- SQL片段 -->
+	<!-- 查什么 -->
+	<sql id="selector">
+	  select * from tchannel
+	</sql>	
+	<!-- 查询条件 -->
+	<sql id="where">
+	  <where> <!-- 自动判断 -->
+		<!-- 判字符串 -->
+		<if test="cname!=null and cname!=''">
+			and cname=#{cname}
+		</if>
+		
+		<if test="isleaf!=0">
+			and isleaf=#{isleaf}
+		</if>	
+		<if test="pid!=0">
+			and pid=#{pid}
+		</if>	
+	  </where>
+	</sql>
+	
+	<!-- 排序 -->
+	<sql id="order">
+	  order by id desc
+	</sql>
+	
+	<!-- 分页
+       >:&gt;
+       <:&lt; -->     
+       <sql id="page">
+         <where>
+           <if test="start!=0">
+             and n&gt;=#{start}
+           </if>
+           <if test="end!=0">
+             and n&lt;=#{end}
+           </if>
+         </where>
+       </sql>
+  
+</mapper>
+
+  

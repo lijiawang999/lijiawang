@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指向dao层 -->
+<mapper namespace="com.zs.pms.dao.ArticalDao">
+   <!-- 关联  type最外层对象 id自己取名 -->
+   <resultMap type="TArtical" id="articalmap">
+    	<!-- 一对一关联
+     	 property:属性名
+     	 column:关联的字段名
+      	select;关联执行的sql名称 
+                        执行完sql返回的对象赋值给dep-->   
+     	<association property="channel" column="channel" select="getchannel"/>  
+     	
+    </resultMap> 
+    
+    
+   <resultMap type="TArtical" id="articalmap2">
+
+    	 
+     	<association property="channel" column="channel" select="getchannel"/>  
+     	
+    </resultMap> 
+          
+    <!-- 关联执行 查询所属栏目-->   
+    <select id="getchannel" parameterType="int" resultType="TChannel">
+      select * from tchannel where id=#{channel}
+    </select>
+    
+        
+    <!-- 8.关联返回 id方法名-->
+    <select id="queryById" parameterType="int" resultMap="articalmap">
+      select * from TArtical where id=#{id}
+    </select>
+    
+    <!-- 9.通过所属栏目查文章-->
+    <select id="queryByChannel" parameterType="int" resultType="TArtical">
+      select * from TArtical where channel=#{channel}
+    </select>
+    
+    <!-- 1.普通条件查询 -->
+    
+    <select id="queryByCon" parameterType="QueryArtical" resultType="TArtical">        
+        <!-- 调用sql片段 -->
+          <include refid="selector"/>
+          <include refid="where"/>
+          <include refid="order"/>               
+    </select>
+    
+    
+    <!-- 2.分页查询 -->
+    <select id="queryByPage" parameterType="QueryArtical" resultMap="articalmap2">
+      select * from(
+        select rownum n,t.* 
+        from(
+        <!-- 调用sql片段 -->
+          <include refid="selector"/>
+          <include refid="where"/>
+          <include refid="order"/>
+          )t) t1
+          <include refid="page"/> 
+    </select>
+    <!-- sql片段 -->
+    <!-- 查什么 -->
+    <sql id="selector">
+      select * from TArtical
+    </sql>
+     <!-- 查询条件 -->
+    <sql id="where">
+      <where> <!-- 自动判断 不写条件 不显示 一个条件自动去掉第一个条件前的and --> 
+	      <if test="author!=null and author!=''">
+	       and  author=#{author} 
+	      </if>
+	      <if test="title!=null and title!=''">
+	       and  title=#{title} 
+	      </if>
+	      <if test="ishot!=0">
+	       and  ishot=#{ishot} 
+	      </if>
+	      <if test="isremod!=0">
+	       and  isremod=#{isremod} 
+	      </if>
+	         
+      </where>          
+    </sql>
+     <!--排序 -->
+     <sql id="order">
+       order by id desc
+     </sql>
+     <!-- 分页
+       >:&gt;
+       <:&lt; -->
+       
+       <sql id="page">
+         <where>
+           <if test="start!=0">
+             and n&gt;=#{start}
+           </if>
+           <if test="end!=0">
+             and n&lt;=#{end}
+           </if>
+         </where>
+       </sql>
+    
+    
+   <!-- 3.批量删除 -->
+   <delete id="deleteByIds">
+     delete from TArtical where id in 
+     <!--  collection表示数组类型 item起的别名 separator分隔符号 open以什么开头 close以什么结尾-->
+     <foreach collection="array" item="id" separator="," open="(" close=")">
+       #{id}
+     </foreach>  
+   </delete>
+   
+   
+   <!-- 4.通过id删除 -->
+   <delete id="deleteById" >
+      delete from TArtical where id=#{id}
+   </delete>
+   
+   <!--5. 修改 -->
+   <update id="update" parameterType="TArtical">
+      update TArtical
+      <set>
+            <!--去掉最后一个逗号 因为  -->
+         <trim suffixOverrides=",">
+           <if test="title!=null and title!=''">
+              title=#{title},
+           </if>
+           <if test="content!=null and content!=''">
+               content=#{content} ,         
+           </if>
+           <if test="author!=null and author!=''">
+              author=#{author},
+           </if>
+           <!-- 修改人和时间 -->
+           <if test="updator!=null and updator!=''">
+               updator=#{updator},       
+           </if>
+           <if test="uptime!=null">
+             uptime=sysdate,
+           </if>
+          <if test="channel!=null">
+             channel=#{channel.id},
+          </if>
+          <if test="isremod!=0">
+             isremod=#{isremod},
+          </if>
+          <if test="ishot!=0">
+            ishot=#{ishot},
+          </if>          
+         </trim>        
+      </set>
+    where id=#{id}
+   </update>
+   
+<!--6. 新增 -->
+<insert id="insert" parameterType="TArtical">
+<!-- 生成主键 
+     keyProperty生成的主键到po属性中
+      order：在新增前生成
+      resultType：主键返回值类型-->
+    <selectKey keyProperty="id" order="BEFORE" resultType="int">
+      select seq_artical.nextval  from dual
+    </selectKey>
+   insert into TArtical(id,title,content,author,ctime,channel,isremod,ishot)
+   values(#{id},#{title},#{content},#{author},sysdate,#{channel.id},#{isremod},#{ishot}) 
+</insert>
+
+<!-- 7.查询总页数 -->
+ <select id="queryCount" parameterType="QueryArtical" resultType="int">
+   select count(1) from TArtical 
+    <include refid="where"/>
+ </select>
+ <!-- 8.查询一条 上面 -->
+
+ 
+ 
+
+
+  
+</mapper>
+
+  
