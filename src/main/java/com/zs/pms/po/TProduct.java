@@ -26,11 +26,20 @@ public class TProduct implements Serializable{
 	private DateUtil updatime;
 	private String status;//状态
 	private String fromarea;//产地
-	private String discribe;//描述
+	private String discribe;//描述 图片内容
 	private String packlist;//包装清单
 	private String features;//属性集
 	private String colors;//颜色集
 	private String sizess;//尺寸集
+	private String picturl;//图片
+	
+	
+	public String getPicturl() {
+		return picturl;
+	}
+	public void setPicturl(String picturl) {
+		this.picturl = picturl;
+	}
 	public int getId() {
 		return id;
 	}

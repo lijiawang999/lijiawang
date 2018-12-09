@@ -87,16 +87,6 @@ a {
 	}	 	 
  }
 
-//验证所有
- function chkAll(){
- 	if ((chkCame()&&chkSort())==true) {
- 		return true;
- 	} else {
- 		alert("填写信息有误或请把信息修改完整");
- 		return false;
- 	}
- 	
- }
 
 
 
@@ -110,19 +100,18 @@ a {
 	<div class="rpos">当前位置: 栏目管理 - 修改</div>
 	<form class="ropt">
 	    
-		<input type="submit" onclick="this.form.action='channellist.do';" value="返回列表" class="return-button"/>
+		<input type="submit" onclick="this.form.action='list.do';" value="返回列表" class="return-button"/>
 	</form>
 	<div class="clear"></div>
 </div>
 
 <div class="body-box" style="float:right">
-	<form id="jvForm" action="updatechannel.do?id=${channel.id }" method="post" onsubmit="return chkAll()">
+	<form id="jvForm" action="update.do?id=${CHANNEL.id }" method="post" onsubmit="return chkAll()">
 		<table cellspacing="1" cellpadding="2" width="100%" border="0" class="pn-ftable">
 			<tbody id="tab_1">
 			     <tr>
 					<td width="20%" class="pn-flabel pn-flabel-h">
-						<span class="pn-frequired"></span>
-					
+						<span class="pn-frequired"></span>				
 					</td>
 				</tr>
 				<tr>
@@ -138,32 +127,21 @@ a {
 						<td width="80%" class="pn-fcontent">
 						     <select name="pid">
 							 <c:forEach items="${LIST}" var="name">
-							
-									<option value="${name.id}" >${name.cname}</option>
+							       <c:if test="${CHANNEL.pid==name.id  }">
+					                  <option value="${name.id}" selected="selected">${name.cname}</option>		       
+							       </c:if>
+									
+							       <c:if test="${CHANNEL.pid!=name.id  }">
+					                  <option value="${name.id}">${name.cname}</option>		       
+							       </c:if>
+									
 								
 							  </c:forEach>
 					         </select>
 						</td>
-					</tr>
-				
-				
-
-				
+					</tr>				
 			</tbody>
-			<tbody id="tab_2" style="display: none">
-				<tr>
-					<td >
-						<textarea rows="10" cols="10" id="productdesc" name="description"></textarea>
-					</td>
-				</tr>
-			</tbody>
-			<tbody id="tab_3" style="display: none">
-				<tr>
-					<td >
-						<textarea rows="15" cols="136" id="productList" name="packageList"></textarea>
-					</td>
-				</tr>
-			</tbody>
+			
 			<tbody>
 				<tr>
 					<td class="pn-fbutton" colspan="2">

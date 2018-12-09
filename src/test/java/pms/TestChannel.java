@@ -1,4 +1,4 @@
-package password;
+package pms;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class TestChannel {
 	public void testQuery(){
           QueryChannel query=new QueryChannel();
           query.setPid(1);
+          //query.setChannel(channel);
           List<TChannel> channel=cs.queryByCon(query);
           for (TChannel channel1:channel ) {
 			System.out.println(channel1.getCname());

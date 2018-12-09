@@ -1,4 +1,4 @@
-package password;
+package pms;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +14,7 @@ import com.zs.pms.po.TArtical;
 import com.zs.pms.po.TChannel;
 import com.zs.pms.po.TUser;
 import com.zs.pms.service.ArticalService;
+import com.zs.pms.service.ProductService;
 import com.zs.pms.vo.QueryArtical;
 import com.zs.pms.vo.QueryUser;
 
@@ -22,25 +23,28 @@ import com.zs.pms.vo.QueryUser;
 public class TestArtical {
   @Autowired
   ArticalService as;
+  @Autowired
+  ProductService ps;
   /**
    * 1.条件查询
    */
   
 	public void testQuery(){
-		QueryArtical query=new QueryArtical();
-		query.setTitle("月下独酌1");
 		
-			List<TArtical> list=as.queryByCon(query);
-			for(TArtical aa:list){
-				System.out.println(aa.getContent());
-			}
-			
+//		QueryArtical query=new QueryArtical();
+//		query.setTitle("月下独酌1");
+//		
+//			List<TArtical> list=as.queryByCon(query);
+//			for(TArtical aa:list){
+//				System.out.println(aa.getContent());
+//			}
+//			
 		
 	}
   /**
    * 2.通过id查询
    */
- @Test 
+  
   public void testQueryById(){
 	    List<TArtical> ar=as.queryByChannel(5);
 	    for (TArtical aa:ar) {
@@ -109,7 +113,7 @@ public class TestArtical {
    /**
     * 6.分页查询和7.总页数
     */
- @Test
+
    public void testPage(){
 	 QueryArtical query=new QueryArtical();
 		 System.out.println("总页数"+as.queryCount(query));

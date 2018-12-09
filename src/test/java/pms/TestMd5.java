@@ -1,4 +1,4 @@
-package password;
+package pms;
 
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.junit.Test;

@@ -164,4 +164,13 @@ private String update(TUser user,HttpSession session,ModelMap map){
 	}
 	
 }
+/**
+ * 验证用户名
+ */
+@RequestMapping("chkuser.do")
+@ResponseBody
+public String chk(QueryUser query){
+	TUser user=(TUser) us.queryByCon(query);
+	return "user/add";
+}
 }

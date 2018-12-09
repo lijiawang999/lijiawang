@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zs.pms.po.TUser;
 import com.zs.pms.service.UserService;
-
+/**
+ * 表述性状态转移
+ * @author Administrator
+ *
+ */
 @Controller
 public class RestController {
 	@Autowired

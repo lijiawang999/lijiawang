@@ -167,7 +167,7 @@
 			<td align="center">${user.birthdayTxt }</td>			
 			<td align="center">${user.email }</td>
 			<td align="center">${user.dept.dname }</td>
-			<td align="center"><img src="../upload/${user.pic }" width="30px" height="45px"/></td>
+			<td align="center"><img src="${user.pic }" width="30px" height="45px"/></td>
 			<td align="center">${user.creator}</td>
 			<td align="center">${user.creatimeTxt}</td>
 			<td align="center">${user.uodator}</td>

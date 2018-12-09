@@ -162,7 +162,7 @@ function chkemail(){
 
 //文档就绪事件
 $(function(){
-//下拉框change时间
+//下拉框change事件
 	$("#dept1").change(		
 	 function(){
 		 //清空第二个下拉框
@@ -187,25 +187,29 @@ $(function(){
 	});
 	
 	
+	
+	
 });
 
+			
 function upload(){
 	var args={
 			//url绝对路径
-	 url:$("#path").val()+"/upload/common.do",
+	 url:"../upload/service.do",
 	 //返回类型
 	 dataType:"text",
 	 //提交方式
 	 type:"post",
 	 success:function(result){
 		 //设置图片的属性
-		 $("#img").attr("src",$("#path").val()+"/upload/"+result);
+		 $("#img").attr("src",result);
 		 //将路径设置到隐藏域中
 		 $("#pic").val(result);
 	 }
 	}
 	$("#jvForm").ajaxSubmit(args);
 }
+
 </script>
 </head>
 <body>

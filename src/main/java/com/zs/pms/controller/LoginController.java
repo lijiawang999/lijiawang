@@ -14,6 +14,7 @@ import com.jhlabs.composite.AddComposite;
 import com.zs.pms.exception.AppException;
 import com.zs.pms.po.TPermission;
 import com.zs.pms.po.TUser;
+import com.zs.pms.service.RedisService;
 import com.zs.pms.service.UserService;
 import com.zs.pms.serviceimpl.UserServiceImpl;
 import com.zs.pms.utils.DateUtil;
@@ -27,6 +28,8 @@ import com.zs.pms.vo.QueryUser;
 public class LoginController {
 	@Autowired //装配业务层通过
 	UserService us;
+	@Autowired
+	RedisService rs;
 	@RequestMapping("/tologin.do")
 	public String toLogin(){
 		return "login";
@@ -59,6 +62,12 @@ public class LoginController {
 			session.setAttribute("USER", user);
 		    session.setAttribute("TIME",DateUtil.getDateToStr(new Date(), "yyyy-MM-dd"));
 			//跳转到主页
+		    rs.setTCodes("F");//材质
+			rs.setTCodes("C");//颜色
+			rs.setTCodes("S");//尺码
+			rs.setBrands();//品牌
+			rs.setTypes(1);//上衣类型的子类别
+
 			return "main";
 		} catch (AppException e) {
 			//账号密码不正确提示错误信息

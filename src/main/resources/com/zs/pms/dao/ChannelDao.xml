@@ -96,6 +96,9 @@
 		<if test="cname!=null and cname!=''">
 			and cname=#{cname}
 		</if>
+		<if test="channel.cname!=null and channel.cname!=''">
+			and channel.cname=#{channel.cname}
+		</if>
 		
 		<if test="isleaf!=0">
 			and isleaf=#{isleaf}

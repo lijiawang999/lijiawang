@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${sku.skuname}</title>
+</head>
+
+<body>
+	<form action="1.html" method="get" target="_blank">
+    <center><h3>${sku.skuname}</h3></center>
+        <hr />
+	<input  type="hidden" name="产品型号" value="Apple iPhone 6 32GB"/>
+    <img src="${sku.skupic}" style="float:left;"/>
+    <ul style="float:left; list-style:none; width:500; height:400">
+        <li>一口价： <span style="font-size:36px; color:#F00">￥${sku.sellcost}</span>元&nbsp;&nbsp;&nbsp;&nbsp;<s>￥${sku.price}</s>元</li>
+        <li><hr  style="border-bottom-style:dotted" /></li>
+        <li>运&nbsp;&nbsp;费:
+          <#if sku.trancost==0>
+                                    免运费
+           <#else>
+                               ￥${sku.trancost}元
+          </#if> 
+        
+        </li>
+        <li><hr  style="border-bottom-style:dotted" /></li>
+        <li>
+	        
+	       <#list SLIST as sku>
+	            <span style="border:1">
+	              <img src="${sku.skupic}" width="45" height="45"  />${sku.colorTxt}
+	           </span>
+	       </#list>
+        </li>
+        <li><input  type="submit" value="立刻购买" style="width:150px; height:36px" /></li><br />
+       <li>购买数量：<input type="text" name="数量" value="" /></li><br />
+        <li><textarea rows="2" cols="50">此商品支持网银支付，网上汇款。收货满意后出售者才能拿钱，货款都安全！</textarea></li><br />
+        <li>剩余时间：&nbsp;&nbsp;10天23小时</li>
+        <li><hr  style="border-bottom-style:dotted" /></li>
+        <li>本期售出：&nbsp;&nbsp;${sku.sellcont}</li>
+       <li><hr  style="border-bottom-style:dotted" /></li>
+        <li>商品类型：&nbsp;&nbsp;全新&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所在地：&nbsp;&nbsp;${product.fromarea}</li>
+        <li><hr  style="border-bottom-style:dotted" /></li>
+        <li>商品数量：&nbsp;&nbsp;1件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览量：&nbsp;&nbsp;17次</li>
+  	<li><hr  style="border-bottom-style:dotted" /></li>  
+    </ul>
+    <div style="clear: both"></div>
+
+  <center> 
+    友情链接：<a href="http://www.baidu.com" target="_blank">百度</a> | <a href="http://www.jingdong.com" target="_blank">京东</a> | <a href="http://www.taobao.com" target="_blank">淘宝</a> | 
+ </center>
+
+	<hr />
+    <center>COPYRIGHT &copy; 2003-2010 北京市京东商场有限公司 ALL TIGHT RESRVED</center>
+	</form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指向dao层 -->
+<mapper namespace="com.zs.pms.dao.ProductDao">
+  <select id="queryAll"  resultType="TProduct">
+      select * from TPRODUCT order by id desc
+  </select>
+  <!--6. 新增 -->
+<insert id="insert" parameterType="TProduct">
+<!-- 生成主键 
+     keyProperty生成的主键到po属性中
+      order：在新增前生成
+      resultType：主键返回值类型-->
+    <selectKey keyProperty="id" order="BEFORE" resultType="int">
+     select seq_product.nextval  from dual
+    </selectKey>
+   insert into TPRODUCT(id,pname,brand,weight,isnew,ishot,isrecommend,ptype,creator, creatime, 
+status,fromarea,discribe,packlist,features,colors,sizess,picturl)
+   values(#{id},#{pname},#{brand},#{weight},#{isnew},#{ishot},#{isrecommend},#{ptype},#{creator}, sysdate,
+#{status},#{fromarea},#{discribe},#{packlist},#{features},#{colors},#{sizess},#{picturl}) 
+</insert>
+
+<select id="queryById" parameterType="int" resultType="TProduct">
+		select * from tproduct where id=#{id}
+	</select>
+  
+</mapper>
+
+  

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指向dao层 -->
+<mapper namespace="com.zs.pms.dao.SkuDao">
+  
+  <!--6. 新增 -->
+<insert id="insert" parameterType="TSku">
+		<selectKey keyProperty="id" order="BEFORE"  resultType="int">
+			select seq_sku.nextval  from dual
+		</selectKey>
+		insert into
+		tsku(id,pid,color,siz,feature,trancost,sellcost,recont,limi,wpos,skupic,skuname,
+       price,sellcont,creator,creatime,safcont)
+		values(#{id},#{pid},#{color},#{siz},#{feature},#{trancost},#{sellcost},#{recont},#{limi},#{wpos},#{skupic},#{skuname},
+        #{price},#{sellcont},#{creator},sysdate,#{safcont})
+
+</insert>
+
+<!-- 查询 -->
+<select id="queryByPid" parameterType="int" resultType="TSku">
+    select * from tsku where pid=#{pid}
+</select>
+<!-- 修改 -->
+<update id="update" parameterType="TSku" >
+	update tsku set
+		price=#{price},
+		trancost=#{trancost},
+		sellcost=#{sellcost},
+		recont=#{recont},
+		limi=#{limi},
+		safcont=#{safcont},
+		updatime=sysdate,
+		updator=#{updator}
+		where id=#{id}
+	
+</update>
+	
+
+  
+</mapper>
+
+  

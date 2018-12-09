@@ -12,13 +12,14 @@ public class TSku implements Serializable{
 
 	private int id;
 	private int pid;//商品id
-	private String color;//颜色
-	private int size;//尺寸
-	private String feature;//材质
+	private int color;//颜色
+	private int siz;//尺寸
+	private int feature;//材质
 	private double trancost;//运费
 	private double sellcost;//售价
 	private int recont;//库存数
-	private int limit;//购买限制
+	private int limi;//购买限制
+	
 	private String wpos;//仓库号
 	private String skupic;//sku图片
 	private String skuname;//sku名称
@@ -29,6 +30,36 @@ public class TSku implements Serializable{
 	private int updator;//
 	private Date updatime;//
 	private int safcont;//安全库存
+	
+	
+	
+	// 用于显示
+		private String colorTxt;
+		private String sizTxt;
+		private String featureTxt;
+		
+		
+		
+		
+		
+	public String getColorTxt() {
+			return colorTxt;
+		}
+		public void setColorTxt(String colorTxt) {
+			this.colorTxt = colorTxt;
+		}
+		public String getSizTxt() {
+			return sizTxt;
+		}
+		public void setSizTxt(String sizTxt) {
+			this.sizTxt = sizTxt;
+		}
+		public String getFeatureTxt() {
+			return featureTxt;
+		}
+		public void setFeatureTxt(String featureTxt) {
+			this.featureTxt = featureTxt;
+		}
 	public int getId() {
 		return id;
 	}
@@ -41,22 +72,22 @@ public class TSku implements Serializable{
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-	public String getColor() {
+	public int getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(int color) {
 		this.color = color;
 	}
-	public int getSize() {
-		return size;
+	public int getSiz() {
+		return siz;
 	}
-	public void setSize(int size) {
-		this.size = size;
+	public void setSiz(int siz) {
+		this.siz = siz;
 	}
-	public String getFeature() {
+	public int getFeature() {
 		return feature;
 	}
-	public void setFeature(String feature) {
+	public void setFeature(int feature) {
 		this.feature = feature;
 	}
 	public double getTrancost() {
@@ -77,11 +108,11 @@ public class TSku implements Serializable{
 	public void setRecont(int recont) {
 		this.recont = recont;
 	}
-	public int getLimit() {
-		return limit;
+	public int getLimi() {
+		return limi;
 	}
-	public void setLimit(int limit) {
-		this.limit = limit;
+	public void setLimi(int limi) {
+		this.limi = limi;
 	}
 	public String getWpos() {
 		return wpos;
@@ -143,5 +174,6 @@ public class TSku implements Serializable{
 	public void setSafcont(int safcont) {
 		this.safcont = safcont;
 	}
-
+	
+	
 }
